@@ -34,6 +34,7 @@ public class Controller2D : MonoBehaviour {
     void Update()
     {
         animator.SetBool("onAir", !collisions.below);
+        animator.SetBool("isDashing", collisions.isDashing);
     }
 
     public void Move(Vector3 velocity)
@@ -241,6 +242,8 @@ public class Controller2D : MonoBehaviour {
         public bool above, below;
         public bool left, right;
 
+        public bool isDashing;
+
         public bool climbingSlope, descendingSlope;
         public float slopeAngle, slopeAngleOld;
         public int faceDir;
@@ -251,6 +254,7 @@ public class Controller2D : MonoBehaviour {
             left = right = false;
             climbingSlope = false;
             descendingSlope = false;
+            //isDashing = false;
             
             slopeAngleOld = slopeAngle;
             slopeAngle = 0;

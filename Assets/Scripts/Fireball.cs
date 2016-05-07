@@ -7,6 +7,8 @@ public class Fireball : MonoBehaviour {
     private Rigidbody2D fireball;
     public float speed = 2;
 
+    public GameObject explosion;
+
 	// Use this for initialization
 	void Start () {
         fireball = GetComponent<Rigidbody2D>();
@@ -23,6 +25,7 @@ public class Fireball : MonoBehaviour {
         {
             other.SendMessage("ApplyDamage", Random.Range(18, 25));
             Debug.Log("Acertou o inimigo");
+            Instantiate(explosion, transform.position, transform.rotation);
             Destroy(gameObject);
         }
     }

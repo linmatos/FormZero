@@ -9,6 +9,7 @@ public class Player : MonoBehaviour {
         public int health = 100;
     }
 
+    public GameObject barrell;
     public GameObject fireball;
     public Transform firePoint;
     public float fireballSpeed = 1;
@@ -54,6 +55,7 @@ public class Player : MonoBehaviour {
         if (transform.position.y <= -40)
         {
             DamagePlayer(9999);
+            Debug.Log("Morreu!");
         }
 
         Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
@@ -68,8 +70,55 @@ public class Player : MonoBehaviour {
             fireballClone.GetComponent<Fireball>().speed = fireballSpeed * Mathf.Sign(controller.collisions.faceDir);
         }
 
+        // ------- Código base do sliding -------
+        /*
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            float minimum = 10;
+            float maximum = 25;
+            transform.position = new Vector3(Mathf.Lerp(minimum, maximum, Time.time), 0, 0);
+        }
+        */
+
         float targetVelocityX = input.x * moveSpeed;
-        velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirbourne);
+
+        //Alterei aqui
+        if (Input.GetKeyDown(KeyCode.LeftAlt))
+        {
+            velocity.x = Mathf.SmoothDamp(velocity.x, (targetVelocityX * 20), ref velocityXSmoothing, (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirbourne);
+            controller.collisions.isDashing = true;
+
+            //INATANCIAR A ARMADILHA
+            //Cria um barril onde ele começa a dar o dash
+            //GameObject barrellClone1 = (GameObject)Instantiate(barrell, firePoint.position, firePoint.rotation);
+        }
+        else
+        {
+            velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirbourne);
+            controller.collisions.isDashing = false;
+        }
+
+        if (Input.GetKeyUp(KeyCode.LeftAlt))
+        {
+            /****************************************************************************************
+            ===================== CÓDIGO DE SOLTAR O BOTÃO E ATIVAR A ARMADILHA =====================
+
+            É o seguinte, a armadilha é instanciada lá em cima, quando começa o dash
+            Aqui ela vai ser ativada
+            Quando soltar o botão de criar armadilha (aqui no caso Alt Esquerdo), ela vai ser ativada
+            O código seria algo assim:
+
+            armadilha.activate(1);
+
+            O método activate(int type) é público e o parâmetro passado fala qual armadilha vai ativar
+            O tipo da armadilha já vai ser definido antes, quando o jogador der o dash
+
+            O tamanho da armadilha ainda não vai ser mutável, mas pensarei nisso depois
+            ******************************************************************************************/
+
+            //Cria um barril onde ele solta o botão de dash
+            //GameObject barrellClone2 = (GameObject)Instantiate(barrell, firePoint.position, firePoint.rotation);
+        }
 
         bool wallSliding = false;
         if ((controller.collisions.left || controller.collisions.right) && !controller.collisions.below && velocity.y < 0)
