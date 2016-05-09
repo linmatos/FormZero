@@ -28,6 +28,11 @@ public class Fireball : MonoBehaviour {
             Instantiate(explosion, transform.position, transform.rotation);
             Destroy(gameObject);
         }
+        if (other.gameObject.tag == "Scenario")
+        {
+            Instantiate(explosion, transform.position, transform.rotation);
+            Destroy(gameObject);
+        }
     }
 
     void Update()
