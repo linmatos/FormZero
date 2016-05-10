@@ -38,7 +38,7 @@ public class Fireball : MonoBehaviour {
     void Update()
     {
         fireball.position = new Vector2(fireball.position.x + speed, fireball.position.y);
-        //Destrói a fireball depois de 5 segundos
+        //Destrói a fireball depois de x segundos
         timeLeft -= Time.deltaTime;
         if (timeLeft < 0)
         {
