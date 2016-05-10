@@ -7,6 +7,8 @@ public class Fireball : MonoBehaviour {
     private Rigidbody2D fireball;
     public float speed = 2;
 
+    public AudioClip explosionSound;
+
     public GameObject explosion;
 
 	// Use this for initialization
@@ -27,6 +29,7 @@ public class Fireball : MonoBehaviour {
             Debug.Log("Acertou o inimigo");
             Instantiate(explosion, transform.position, transform.rotation);
             Destroy(gameObject);
+            AudioSource.PlayClipAtPoint(explosionSound, transform.position);
         }
         if (other.gameObject.tag == "Scenario")
         {

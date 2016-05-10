@@ -19,6 +19,7 @@ public class Player : MonoBehaviour {
     public GameObject fireball;
     public Transform firePoint;
     public float fireballSpeed = 1;
+    public AudioClip fireballSound;
 
     public PlayerStats playerStats = new PlayerStats();
 
@@ -80,6 +81,7 @@ public class Player : MonoBehaviour {
         {
             //fireball.transform.localScale.z = 1*Mathf.Sign(wallDirX);
             GameObject fireballClone = (GameObject) Instantiate(fireball, firePoint.position, firePoint.rotation);
+            AudioSource.PlayClipAtPoint(fireballSound, firePoint.position);
             //fireballClone.transform.position = new Vector3(fireballClone.transform.position.x + fireballSpeed * Mathf.Sign(wallDirX), fireballClone.transform.position.y, fireballClone.transform.position.z);
             fireballClone.GetComponent<Fireball>().speed = fireballSpeed * Mathf.Sign(controller.collisions.faceDir);
         }
