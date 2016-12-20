@@ -97,6 +97,7 @@ public class Player : MonoBehaviour {
         */
 
         float targetVelocityX = input.x * moveSpeed;
+        //Debug.Log("Move speed = " + moveSpeed + ", input.x = " + input.x + ", Tgv vel = " + targetVelocityX);
 
         if (Input.GetButtonDown("Horizontal"))
         {

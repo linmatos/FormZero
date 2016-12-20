@@ -50,6 +50,7 @@ public class Controller2D : MonoBehaviour {
             scale.x = collisions.faceDir;
             transform.localScale = scale;
             animator.SetFloat("speed", Mathf.Abs(velocity.x));
+            //Debug.Log("Velocity x = " + velocity.x);
         }
         if(velocity.y < 0)
         {
@@ -63,7 +64,8 @@ public class Controller2D : MonoBehaviour {
             VerticalCollisions(ref velocity);
         }
         
-        transform.Translate(velocity);
+        //CONSERTEI!
+        transform.Translate(velocity, Space.World);
     }
 
     void HorizontalCollisions(ref Vector3 velocity)
